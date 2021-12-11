@@ -1,39 +1,26 @@
-from tkinter import *
-from time import strftime
+import tkinter as tk
+import time
 
 
-# Makes the window
-window = Tk() # Make window
-window.title('Clock') # Window title
-window.geometry("800x200") # Window size
+# Count every 1 second
+def count():
+    localTime = time.localtime() # Get the local time
+    timeText.set(time.strftime("%H:%H:%S", localTime)) # Set the text to the time
+    window.after(1000, count) # Go every 1 second to this function
 
 
-# Updates the time
-def clock(): 
-    time = strftime("%H:%M:%S") # Get the time
-    text.set(time) # Updates the label
-    window.after(1000, clock) # Loop every second
+window = tk.Tk() # Makes the window
+window.title("Clock") # Title of the window
+
+timeText = tk.StringVar() 
+
+label = tk.Label(bg="lightblue", fg="black", font=("Comic sans MS", 125), textvariable=timeText) # Information about the window / text
+label.pack() # Add the time label to the window
 
 
-text = StringVar() # Time
-
-# Makes the label
-label = Label(window)
-
-label = Label(
-    window, 
-    font=("arial", 140, 'bold'), 
-    bg="lightblue", 
-)
-
-label.configure(textvariable=text)
-
-label.pack(
-    fill="both", expand=True
-    )
 
 
 # If the code starts
 if __name__ == "__main__":
-    clock() 
-    window.mainloop() 
+    count() # Show the time
+    window.mainloop() # Starts the window
